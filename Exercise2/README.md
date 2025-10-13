@@ -46,6 +46,17 @@ After executing a specific task, the resulting data is stored in its respective 
 3. Select your connected Arduino UNO
 4. Build and upload sketch to arduino.
 
+### Parts
+1. Quantity: 1, Part  Arduino Uno R3
+1. Quantity: 1, Part Green LED
+1. Quantity: 1, Part Yellow LED
+1. Quantity: 1, Part Red LED
+1. Quantity: 1, Part Blue LED
+1. Quantity: 4, Part 220 Ω Resistor
+1. Quantity: 1, Part  Pushbutton
+1. Quantity: 1, Part 10 kΩ Resistor
+1. Quantity: 1, Part TFT LCD 1.8 inch SPI ST7735 128x160
+
 ### ISR roles
 
 1. ISR(TIMER1_COMPA_vect) Used to run scheduled timer tasks. This interrupt is triggered by timer every 1 millisecond.
