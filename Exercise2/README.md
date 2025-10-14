@@ -16,9 +16,9 @@ There are four LED lights: blue, red, yellow, and green.
 
 The blue, red, and yellow LEDs are controlled by a scheduled task system utilizing hardware timers and interrupts. This approach provides non-blocking execution.
 
-* Blue LED: Blinks every $\mathbf{1}$ second.
-* Red LED: Blinks every $\mathbf{0.5}$ seconds.
-* Yellow LED: Blinks every $\mathbf{0.25}$ seconds.
+* Blue LED: Blinks every $3$ second.
+* Red LED: Blinks every $0.5$ seconds.
+* Yellow LED: Blinks every $0.05$ seconds.
 
 **Button-Controlled LED (External Interrupts)**
 

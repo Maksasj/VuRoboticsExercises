@@ -18,11 +18,11 @@ TFT TFTscreen = TFT(TFT_CHIP_SELECT_PIN, TFT_DATA_CONTROL_PIN, TFT_RESET_PIN);
 volatile int tasks_timers[5];
 
 #define SAVES_ADDRESS 0
-#define BLUE_LICHTS_ADDRESS 2
-#define RED_LICHTS_ADDRESS 4
-#define YELLOW_LICHTS_ADDRESS 6
-#define GREEN_LICHTS_ADDRESS 8
-#define FRAMES_LICHTS_ADDRESS 10
+#define BLUE_LIGHTS_ADDRESS 2
+#define RED_LIGHTS_ADDRESS 4
+#define YELLOW_LIGHTS_ADDRESS 6
+#define GREEN_LIGHTS_ADDRESS 8
+#define FRAMES_LIGHTS_ADDRESS 10
 
 volatile int saves;
 volatile int blue_lights;
@@ -50,19 +50,20 @@ void setup() {
 
   /*
   EEPROM.put(SAVES_ADDRESS, 0);
-  EEPROM.put(BLUE_LICHTS_ADDRESS, 0);
-  EEPROM.put(RED_LICHTS_ADDRESS, 0);
-  EEPROM.put(YELLOW_LICHTS_ADDRESS, 0);
-  EEPROM.put(GREEN_LICHTS_ADDRESS, 0);
-  EEPROM.put(FRAMES_LICHTS_ADDRESS, 0);
+  EEPROM.put(BLUE_LIGHTS_ADDRESS, 0);
+  EEPROM.put(RED_LIGHTS_ADDRESS, 0);
+  EEPROM.put(YELLOW_LIGHTS_ADDRESS, 0);
+  EEPROM.put(GREEN_LIGHTS_ADDRESS, 0);
+  EEPROM.put(FRAMES_LIGHTS_ADDRESS, 0);
+  while(1);
   */
 
   EEPROM.get(SAVES_ADDRESS, saves);
-  EEPROM.get(BLUE_LICHTS_ADDRESS, blue_lights);
-  EEPROM.get(RED_LICHTS_ADDRESS, red_lights);
-  EEPROM.get(YELLOW_LICHTS_ADDRESS, yellow_lights);
-  EEPROM.get(GREEN_LICHTS_ADDRESS, green_lights);
-  EEPROM.get(FRAMES_LICHTS_ADDRESS, frames);
+  EEPROM.get(BLUE_LIGHTS_ADDRESS, blue_lights);
+  EEPROM.get(RED_LIGHTS_ADDRESS, red_lights);
+  EEPROM.get(YELLOW_LIGHTS_ADDRESS, yellow_lights);
+  EEPROM.get(GREEN_LIGHTS_ADDRESS, green_lights);
+  EEPROM.get(FRAMES_LIGHTS_ADDRESS, frames);
 
   setupTimer1();
 
@@ -96,7 +97,7 @@ void loop() {
   }
 
   {
-    TFTscreen.stroke(255, 255, 0);
+    TFTscreen.stroke(0, 255, 255);
     sprintf(data, "y: %d", yellow_lights);
     TFTscreen.text(data, 6, 56);
   }
@@ -108,7 +109,7 @@ void loop() {
   }
 
   {
-    TFTscreen.stroke(0, 255, 255);
+    TFTscreen.stroke(255, 255, 0);
     sprintf(data, "f: %d", frames);
     TFTscreen.text(data, 6, 88);
   }
@@ -120,7 +121,7 @@ void loop() {
 void ISR_button_pressed(void) {
   if((millis() - button_bounce_time) > button_bounce_delay) {
     ++green_lights;
-    digitalWrite(5,  !digitalRead(5));
+    digitalWrite(GREEN_DIODE_PIN,  !digitalRead(GREEN_DIODE_PIN));
     button_bounce_time = millis();
   }
 }
@@ -144,7 +145,7 @@ ISR(TIMER1_COMPA_vect) {
     ++tasks_timers[i];
   
   // perfom task 1
-  if(tasks_timers[0] >= 1000) {
+  if(tasks_timers[0] >= 3000) {
     ++yellow_lights;
     digitalWrite(YELLOW_DIODE_PIN, !digitalRead(YELLOW_DIODE_PIN));
     tasks_timers[0] = 0;
@@ -158,14 +159,14 @@ ISR(TIMER1_COMPA_vect) {
   }
 
   // perfom task 3
-  if(tasks_timers[2] >= 250) {
+  if(tasks_timers[2] >= 50) {
     ++blue_lights;
     digitalWrite(BLUE_DIODE_PIN, !digitalRead(BLUE_DIODE_PIN));
     tasks_timers[2] = 0;
   }
 
   // perfom task 4
-  if(tasks_timers[3] >= 100) {
+  if(tasks_timers[3] >= 10000) {
     ++saves;
 
     if(saves > 32766) saves = 0;
@@ -175,11 +176,11 @@ ISR(TIMER1_COMPA_vect) {
     if(frames > 32766) frames = 0;
 
     EEPROM.put(SAVES_ADDRESS, saves);
-    EEPROM.put(BLUE_LICHTS_ADDRESS, blue_lights);
-    EEPROM.put(RED_LICHTS_ADDRESS, red_lights);
-    EEPROM.put(YELLOW_LICHTS_ADDRESS, yellow_lights);
-    EEPROM.put(GREEN_LICHTS_ADDRESS, green_lights);
-    EEPROM.put(FRAMES_LICHTS_ADDRESS, frames);
+    EEPROM.put(BLUE_LIGHTS_ADDRESS, blue_lights);
+    EEPROM.put(RED_LIGHTS_ADDRESS, red_lights);
+    EEPROM.put(YELLOW_LIGHTS_ADDRESS, yellow_lights);
+    EEPROM.put(GREEN_LIGHTS_ADDRESS, green_lights);
+    EEPROM.put(FRAMES_LIGHTS_ADDRESS, frames);
 
     tasks_timers[3] = 0; 
   }
