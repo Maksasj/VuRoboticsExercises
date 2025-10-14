@@ -31,13 +31,13 @@ volatile int yellow_lights;
 volatile int green_lights;
 volatile int frames;
 
-volatile int button_bounce_delay = 200;
+volatile int button_bounce_delay = 300;
 volatile int button_bounce_time = 0;
 
 void setup() {
   TFTscreen.begin();
   TFTscreen.background(0, 0, 0);
-  TFTscreen.setTextSize(1);
+  TFTscreen.setTextSize(2);
   TFTscreen.setTextColor(0, 0);
   
   pinMode(BLUE_DIODE_PIN, OUTPUT);
@@ -86,31 +86,31 @@ void loop() {
   {
     TFTscreen.stroke(0, 0, 255);
     sprintf(data, "b: %d", blue_lights);
-    TFTscreen.text(data, 6, 16);
+    TFTscreen.text(data, 6, 24);
   }
 
   {
     TFTscreen.stroke(255, 0, 0);
     sprintf(data, "r: %d", red_lights);
-    TFTscreen.text(data, 6, 24);
+    TFTscreen.text(data, 6, 40);
   }
 
   {
     TFTscreen.stroke(255, 255, 0);
     sprintf(data, "y: %d", yellow_lights);
-    TFTscreen.text(data, 6, 32);
+    TFTscreen.text(data, 6, 56);
   }
 
   {
     TFTscreen.stroke(0, 255, 0);
     sprintf(data, "g: %d", green_lights);
-    TFTscreen.text(data, 6, 40);
+    TFTscreen.text(data, 6, 72);
   }
 
   {
     TFTscreen.stroke(0, 255, 255);
     sprintf(data, "f: %d", frames);
-    TFTscreen.text(data, 6, 48);
+    TFTscreen.text(data, 6, 88);
   }
 
   ++frames;
@@ -167,6 +167,12 @@ ISR(TIMER1_COMPA_vect) {
   // perfom task 4
   if(tasks_timers[3] >= 100) {
     ++saves;
+
+    if(saves > 32766) saves = 0;
+    if(blue_lights > 32766) blue_lights = 0;
+    if(yellow_lights > 32766) yellow_lights = 0;
+    if(green_lights > 32766) green_lights = 0;
+    if(frames > 32766) frames = 0;
 
     EEPROM.put(SAVES_ADDRESS, saves);
     EEPROM.put(BLUE_LICHTS_ADDRESS, blue_lights);
