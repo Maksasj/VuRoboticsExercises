@@ -1,0 +1,5 @@
+Name,Quantity,Component
+"ESP",1,"esp32-c3"
+"MPU",1,"mpu6050"
+"BMP", 1,"bmp280"
+"TTP", 1, "ttp223"
