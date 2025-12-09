@@ -8,7 +8,6 @@ Create a simple tamagotchi-like robot. Robot should support multiple states and 
 ### Design
 All I2C supporting sensors and devices are connected to a single i2c bus which is connected to esp microcontroller 5 and 6 pin. Touch sensor is connected to a 0 pin. Robot have emotion state as well as behavior. State transitions happens on different events: mood threshold, environment event, timeout event.   
 
-
 ### Building steps
 1. Install [Visual Studio Code](https://code.visualstudio.com/)
 1.1 Install ESP-IDF Extension
@@ -35,8 +34,10 @@ Full CSV file could be found [here](https://github.com/Maksasj/VuRoboticsExercis
 - Device working demonstration could be seen [here](https://github.com/Maksasj/VuRoboticsExercises/blob/main/Exercise4/demonstration.mp4)
 
 ### Future improvements
-- Fully soldering battery module to the robot. 
-- Implementing more complex behavior engine and more environments events.
-- Adding simple speaker for more output deviced.
-- Rechargable battery charge level as mood affecting criteria.
-- More interactions.
+- v1.1 Version
+    - Fully soldering battery module to the robot. 
+- v2.0 Version
+    - Implementing more complex behavior engine and more environments events.
+    - Adding simple speaker for more output deviced.
+    - Rechargable battery charge level as mood affecting criteria.
+    - More interactions.
